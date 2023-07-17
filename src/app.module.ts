@@ -12,8 +12,9 @@ import {
   logger,
 } from './common/middleware/logger.middleware';
 import { CatsController } from './cats/cats.controller';
-import { APP_FILTER } from '@nestjs/core';
+import { APP_FILTER, APP_GUARD } from '@nestjs/core';
 import { HttpExceptionFilter } from './common/filter/http-exception.filter';
+import { RolesGuard } from './roles/roles.guard';
 
 @Module({
   imports: [CatsModule],
@@ -24,6 +25,10 @@ import { HttpExceptionFilter } from './common/filter/http-exception.filter';
     //   provide: APP_FILTER,
     //   useClass: HttpExceptionFilter,
     // },
+    {
+      provide: APP_GUARD,
+      useClass: RolesGuard,
+    },
   ],
 })
 export class AppModule {}
