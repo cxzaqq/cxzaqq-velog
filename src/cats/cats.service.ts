@@ -13,4 +13,9 @@ export class CatsService {
   findAll(): Cat[] {
     return this.cats;
   }
+
+  async test() {
+    let ms = 10000;
+    return new Promise((r) => setTimeout(r, ms));
+  }
 }

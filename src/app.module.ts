@@ -12,9 +12,14 @@ import {
   logger,
 } from './common/middleware/logger.middleware';
 import { CatsController } from './cats/cats.controller';
-import { APP_FILTER, APP_GUARD } from '@nestjs/core';
+import { APP_FILTER, APP_GUARD, APP_INTERCEPTOR } from '@nestjs/core';
 import { HttpExceptionFilter } from './common/filter/http-exception.filter';
 import { RolesGuard } from './roles/roles.guard';
+import { LoggingInterceptor } from './common/interceptor/logging.interceptor';
+import { TransformInterceptor } from './common/interceptor/transform.interceptor';
+import { ExcludeNullInterceptor } from './common/interceptor/excludeNull.interceptor';
+import { ErrorsInterceptor } from './common/interceptor/errors.interceptor';
+import { TimeoutInterceptor } from './common/interceptor/timeout.interceptor';
 
 @Module({
   imports: [CatsModule],
@@ -25,9 +30,13 @@ import { RolesGuard } from './roles/roles.guard';
     //   provide: APP_FILTER,
     //   useClass: HttpExceptionFilter,
     // },
+    // {
+    //   provide: APP_GUARD,
+    //   useClass: RolesGuard,
+    // },
     {
-      provide: APP_GUARD,
-      useClass: RolesGuard,
+      provide: APP_INTERCEPTOR,
+      useClass: TimeoutInterceptor,
     },
   ],
 })
