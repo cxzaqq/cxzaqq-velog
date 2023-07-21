@@ -20,9 +20,10 @@ import { TransformInterceptor } from './common/interceptor/transform.interceptor
 import { ExcludeNullInterceptor } from './common/interceptor/excludeNull.interceptor';
 import { ErrorsInterceptor } from './common/interceptor/errors.interceptor';
 import { TimeoutInterceptor } from './common/interceptor/timeout.interceptor';
+import { UserModule } from './user/user.module';
 
 @Module({
-  imports: [CatsModule],
+  imports: [CatsModule, UserModule],
   controllers: [AppController],
   providers: [
     AppService,
