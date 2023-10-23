@@ -11,12 +11,13 @@ import { CatsService } from './cats.service';
 import { Cat } from './interface/cat.interface';
 import { Roles } from 'src/roles/roles.decorator';
 
+@Roles(['user'])
 @Controller('cats')
 export class CatsController {
   constructor(private catsService: CatsService) {}
 
   @Post()
-  @Roles('admin')
+  @Roles(['admin'])
   async create(@Body() createCatDto: CreateCatDto) {
     // throw new ForbiddenException();
     return this.catsService.create(createCatDto);
