@@ -11,15 +11,15 @@
       <h2>사업자 유효성 검증</h2>
       <form>
         <div class="user-box">
-          <input type="text" name="" required="" />
+          <input id="p_nm" type="text" name="" required="" />
           <label>대표자 성명</label>
         </div>
         <div class="user-box">
-          <input type="password" name="" required="" />
+          <input id="b_no" type="password" name="" required="" />
           <label>사업자 등록 번호( '-' 없이 숫자만)</label>
         </div>
         <div class="user-box">
-          <input type="text" name="" required="" />
+          <input id="start_dt" type="text" name="" required="" />
           <label>개업일자(예 20240101)</label>
         </div>
         <a href="#">
@@ -33,3 +33,38 @@
     </div>
   </body>
 </html>
+<script defer>
+  const p_nm = document.querySelector('#p_nm');
+  const b_no = document.querySelector('#b_no');
+  const start_dt = document.querySelector('#start_dt');
+  const button = document.querySelector('a');
+
+  button.addEventListener('click', () => {
+    const req = {
+      p_nm: p_nm.value,
+      b_no: b_no.value,
+      start_dt: start_dt.value,
+    };
+    if (
+      req.b_no.length === 0 ||
+      req.p_nm.length === 0 ||
+      req.start_dt.length !== 8
+    ) {
+      alert('입력이 올바르지 않습니다.');
+    } else {
+      fetch('/', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(req),
+      })
+        .then((res) => res.json())
+        .then((res) => {
+          res.data[0].valid === '02'
+            ? alert('확인할 수 없는 사업자입니다.')
+            : alert('등록된 사업자입니다.');
+        });
+    }
+  });
+</script>
